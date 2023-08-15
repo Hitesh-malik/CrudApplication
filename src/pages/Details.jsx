@@ -17,7 +17,7 @@ export default function Details() {
 
     const getData = () => {
         setLoading(true)
-        setInterval(() => {
+        setTimeout(() => {
             fetch(`https://jsonplaceholder.typicode.com/users/${id}`)
                 .then(response => response.json())
                 .then((data) => {
@@ -34,7 +34,7 @@ export default function Details() {
         <div className='wrapper '>
             <Card className='cardContainer'>
                 <div style={{ fontSize: "2rem" }} className='wrapper2 '>
-                <Button variant="outlined" onClick={()=>navigate(-1)}>Back</Button>
+                    <Button variant="outlined" onClick={() => navigate(-1)}>Back</Button>
                     <b>Details of the user</b>
                     {
                         loading ? (

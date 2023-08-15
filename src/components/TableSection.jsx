@@ -15,7 +15,7 @@ const TableSection = () => {
     // api call for data gathering
     const getData = () => {
         setLoading(true)
-        setInterval(() => {
+        setTimeout(() => {
             fetch('https://jsonplaceholder.typicode.com/users')
                 .then(response => response.json())
                 .then((data) => {
