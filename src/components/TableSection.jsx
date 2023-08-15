@@ -3,12 +3,14 @@ import Button from '@mui/material/Button';
 import EditModal from './EditModal';
 import AddModal from './AddModal';
 import Skeleton from '@mui/material/Skeleton';
+import { useNavigate } from 'react-router-dom';
 
 const TableSection = () => {
     const [userData, setUserData] = useState([])
     const [openEditModal, setOpenEditModal] = useState(false)
     const [openAddModal, setOpenAddModal] = useState(false)
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
     // api call for data gathering
     const getData = () => {
@@ -21,7 +23,7 @@ const TableSection = () => {
                 }).finally(() => {
                     setLoading(false)
                 })
-        }, 10000);
+        }, 1000);
     }
     useEffect(() => {
         getData();
@@ -77,41 +79,45 @@ const TableSection = () => {
         return (
             <>
                 <table>
-                    <tr>
-                        <th>ID</th>
-                        <th>NAME</th>
-                        <th>EMAIL</th>
-                        <th>PHONE</th>
-                        <th>ACTION</th>
-                    </tr>
-                    {
-                        userData.length > 0 && userData.map((singleData, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{singleData.id}</td>
-                                    <td>{singleData.name}</td>
-                                    <td>{singleData.email}</td>
-                                    <td>{singleData.phone}</td>
-                                    <td style={{ padding: "12px" }}>
-                                        <Button variant="outlined" style={{ marginRight: "10px" }} onClick={() => {
-                                            setEditData(() => {
-                                                return (
-                                                    {
-                                                        "id": index,
-                                                        "name": "",
-                                                        "phone": "",
-                                                        "email": ""
-                                                    }
-                                                )
-                                            })
-                                            setOpenEditModal(true)
-                                        }}>EDIT</Button>
-                                        <Button variant="outlined" onClick={() => deleteHandler(singleData.id)}>DELETE</Button>
-                                    </td>
-                                </tr>
-                            )
-                        })
-                    }
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>NAME</th>
+                            <th>EMAIL</th>
+                            <th>PHONE</th>
+                            <th>ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            userData.length > 0 && userData.map((singleData, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{singleData.id}</td>
+                                        <td className='pointer' onClick={()=>navigate(`/details/${singleData.id}`)}>{singleData.name}</td>
+                                        <td>{singleData.email}</td>
+                                        <td>{singleData.phone}</td>
+                                        <td style={{ padding: "12px" }}>
+                                            <Button variant="outlined" style={{ marginRight: "10px" }} onClick={() => {
+                                                setEditData(() => {
+                                                    return (
+                                                        {
+                                                            "id": index,
+                                                            "name": "",
+                                                            "phone": "",
+                                                            "email": ""
+                                                        }
+                                                    )
+                                                })
+                                                setOpenEditModal(true)
+                                            }}>EDIT</Button>
+                                            <Button variant="outlined" onClick={() => deleteHandler(singleData.id)}>DELETE</Button>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
                 </table>
                 <div style={{ display: 'flex', justifyContent: "center", marginTop: "5px" }}>
                     <Button variant="outlined" onClick={() => {

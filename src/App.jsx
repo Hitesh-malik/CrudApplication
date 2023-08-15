@@ -1,15 +1,20 @@
+import { Route, Routes } from 'react-router-dom';
 import './App.css'
 import Navbar from './components/Navbar'
-import TableSection from './components/TableSection'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Details from './pages/Details';
+import Home from './pages/Home';
 function App() {
 
   return (
     <>
-    <Navbar/>
-     <TableSection/>
-     <ToastContainer />
+      <Navbar />
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/details/:id' element={<Details/>} />
+      </Routes>
+      <ToastContainer />
     </>
   )
 }
